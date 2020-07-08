@@ -20,4 +20,4 @@ export class TaskStausValidationPipe implements PipeTransform {
     const result = this.allowedStatus.indexOf(status);
     return result !== -1;
   }
-}
+};
