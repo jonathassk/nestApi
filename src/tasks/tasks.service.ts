@@ -28,26 +28,6 @@ export class TasksService {
     return this.tasks
   }
 
-  createTask(createTaskDto: CreateClassDto): Task {
-    const { title, description } = createTaskDto;
-    const task: Task = {
-      id: uuid(),
-      title,
-      description,
-      status: TaskStatus.OPEN,
-    }
-    this.tasks.push(task)
-    return task;
-  }
-
-  getTaskById(id: string): Task {
-    const task = this.tasks.find(task => task.id === id);
-    if(!task) {
-      throw new NotFoundException('task not found');
-    }
-    return task;
-  }
-
   deleteTask(id: string): void {
     const task = this.getTaskById(id)
     this.tasks = this.tasks.filter(task => task.id !== id)
