@@ -7,13 +7,11 @@ import { TaskStatus } from './task-status.enum';
 
 @Injectable()
 export class TasksService {
-
   constructor (@InjectRepository(TaskRepository) private taskRepository: TaskRepository) {}
 
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     return this.taskRepository.createTask(createTaskDto)
   }
-
 
   async getTaskById(id: number) : Promise<Task>{
     const task = await this.taskRepository.findOne(id);
@@ -21,6 +19,10 @@ export class TasksService {
       throw new NotFoundException(`não exista a task com o id ${id}`)
     }
     return task;
+  }
+
+  async deleteTask(id: number) : Promise<void> {
+    await this.taskRepository.delete(id);
   }
 }
 
