@@ -14,8 +14,8 @@ import {
 import { TasksService } from './tasks.service';
 import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto'
-import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStausValidationPipe } from './pipes/task-status-validation.pipes';
+import { TaskStatus } from './task-status.enum';
 
 @Controller('tasks')
 export class TasksController {
@@ -37,23 +37,8 @@ export class TasksController {
     return this.tasksService.deleteTask(id);
   }
 
-  /* @Get()
-getTasks(@Query(ValidationPipe) filterDto: GetTasksFilterDto): Task[] {
-  console.log('filter', filterDto)
-  if(Object.keys(filterDto).length) {
-    return this.tasksService.getTaskWithFilter(filterDto)
-  } else {
-    return this.tasksService.getAllTasks()
+  @Patch('/:id/status')
+  updateTaskStatus (@Param('id', ParseIntPipe) id: number, @Body('status', TaskStausValidationPipe) status: TaskStatus): Promise<Task> {
+    return this.tasksService.updateTaskStatus(id, status)
   }
-}
-
-
-
-
-
-
-@Patch('/:id/status')
-updateTaskStatus (@Param('id') id: string, @Body('status', TaskStausValidationPipe) status: TaskStatus) {
-  return this.tasksService.updateTaskStatus(id, status)
-} */
 }
