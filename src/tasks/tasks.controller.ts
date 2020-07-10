@@ -16,10 +16,16 @@ import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto'
 import { TaskStausValidationPipe } from './pipes/task-status-validation.pipes';
 import { TaskStatus } from './task-status.enum';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
+
+  @Get()
+  getTasks (@Query(ValidationPipe) filterDto: GetTasksFilterDto) {
+    return this.tasksService.getTasks(filterDto)
+  }
 
   @Get('/:id')
   getTaskById (@Param('id', ParseIntPipe) id: number): Promise<Task> {
